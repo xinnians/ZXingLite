@@ -542,10 +542,12 @@ public class ViewfinderView extends View {
      */
     private void drawFrame(Canvas canvas, Rect frame) {
         paint.setColor(frameColor);
-        canvas.drawRect(frame.left, frame.top, frame.right, frame.top + frameLineWidth, paint);
-        canvas.drawRect(frame.left, frame.top, frame.left + frameLineWidth, frame.bottom, paint);
-        canvas.drawRect(frame.right - frameLineWidth, frame.top, frame.right, frame.bottom, paint);
-        canvas.drawRect(frame.left, frame.bottom - frameLineWidth, frame.right, frame.bottom, paint);
+        //上
+        canvas.drawRect(frame.left, frame.top + cornerRectWidth, frame.right, frame.top + frameLineWidth +cornerRectWidth, paint);
+        //左
+        canvas.drawRect(frame.left + cornerRectWidth, frame.top, frame.left + frameLineWidth + cornerRectWidth, frame.bottom, paint);
+        canvas.drawRect(frame.right - frameLineWidth - cornerRectWidth, frame.top, frame.right - cornerRectWidth, frame.bottom, paint);
+        canvas.drawRect(frame.left, frame.bottom - frameLineWidth - cornerRectWidth, frame.right, frame.bottom - cornerRectWidth, paint);
     }
 
     /**
@@ -558,10 +560,14 @@ public class ViewfinderView extends View {
     private void drawExterior(Canvas canvas, Rect frame, int width, int height) {
         if(maskColor != 0){
             paint.setColor(maskColor);
-            canvas.drawRect(0, 0, width, frame.top, paint);
-            canvas.drawRect(0, frame.top, frame.left, frame.bottom, paint);
-            canvas.drawRect(frame.right, frame.top, width, frame.bottom, paint);
-            canvas.drawRect(0, frame.bottom, width, height, paint);
+            //上
+            canvas.drawRect(0, 0, width, frame.top + cornerRectWidth, paint);
+            //左
+            canvas.drawRect(0, frame.top + cornerRectWidth, frame.left + cornerRectWidth, frame.bottom - cornerRectWidth, paint);
+            //右
+            canvas.drawRect(frame.right - cornerRectWidth, frame.top + cornerRectWidth, width, frame.bottom - cornerRectWidth, paint);
+            //下
+            canvas.drawRect(0, frame.bottom - cornerRectWidth, width, height, paint);
         }
     }
 
